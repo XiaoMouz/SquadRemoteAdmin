@@ -87,8 +87,15 @@ namespace Squad.Admin.Console.Forms
         private void TxtServerPort_Validating(object sender, CancelEventArgs e)
         {
             MaskedTextBox tb = (MaskedTextBox)sender;
-            this.serverConnectionInfo.ServerPort = Convert.ToInt32(tb.Text.Trim());
-            btnConnect.Enabled = this.serverConnectionInfo.IsValid();
+            try
+            {
+                this.serverConnectionInfo.ServerPort = Convert.ToInt32(tb.Text.Trim());
+                btnConnect.Enabled = this.serverConnectionInfo.IsValid();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void TxtServerIP_Validating(object sender, CancelEventArgs e)
@@ -110,6 +117,8 @@ namespace Squad.Admin.Console.Forms
         {
             try
             {
+                btnConnect.Text = "连接中";
+                TipsMsg.Text = "UI 已阻塞，请不要乱点，坐和放宽";
                 // Connect to the game server
                 if (this.rconServerProxy.Connect(this.serverConnectionInfo))
                 {
@@ -118,10 +127,13 @@ namespace Squad.Admin.Console.Forms
                     ListPlayers();
                 }
                 LoadContextMenuItems();
+                TipsMsg.Text = "";
+                btnConnect.Text = "已连接";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unexpected error occurred trying to connect! Exception: " + ex.Message + "\r\nPlease report this error to the adminstrator.");
+                MessageBox.Show("未经处理的错误: " + ex.Message + "\r\n 记得上报过程.");
+                btnConnect.Text = "连接失败(重试)";
             }
         }
 
@@ -129,6 +141,7 @@ namespace Squad.Admin.Console.Forms
         {
             ClearGridRows(grdPlayers);
             EnableLoginControls(false);
+            btnConnect.Text = "连接";
         }
 
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
@@ -139,17 +152,25 @@ namespace Squad.Admin.Console.Forms
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            btnRefresh.Text = "刷新中";
+            TipsMsg.Text = "UI 已阻塞，请不要乱点，坐和放宽";
             GetServerInformation();
             ListPlayers();
+            TipsMsg.Text = "";
+            btnRefresh.Text = "刷新";
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+            btnSend.Enabled = false;
+            TipsMsg.Text = "UI 已阻塞，请不要乱点，坐和放宽";
             string response = this.rconServerProxy.SendCommand(txtCommand.Text);
             AddCommandToHistoryList(txtCommand.Text);
             AddServerResponseText(txtResponse, response);
             ClearCommandText(txtCommand, string.Empty);
             SetControlEnabledState(btnClear, true);
+            TipsMsg.Text = "";
+            btnSend.Enabled = true;
         }
 
 
@@ -257,8 +278,10 @@ namespace Squad.Admin.Console.Forms
 
         void menu_Click(object sender, EventArgs e)
         {
+            TipsMsg.Text = "UI 已阻塞，请不要乱点，坐和放宽";
             this.rconServerProxy.SendCommand(((MenuItem)sender).Tag.ToString());
             AddCommandToHistoryList(((MenuItem)sender).Tag.ToString());
+            TipsMsg.Text = "";
         }
 
 
@@ -359,12 +382,14 @@ namespace Squad.Admin.Console.Forms
             try
             {
                 string playerList = this.rconServerProxy.GetPlayerList();
+                System.Console.WriteLine(playerList);
 
                 // Remove all rows from the grid
                 ClearGridRows(grdPlayers);
 
                 // Take the response and break it into a string array breaking each line off
                 string[] playerArray = playerList.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+                int playerCount = 0;
 
                 for (int i = 0; i < playerArray.Length; i++)
                 {
@@ -397,14 +422,16 @@ namespace Squad.Admin.Console.Forms
                         {
                             if (isPlayer)
                             {
+                                playerCount++;
                                 string[] playerInfo = currentLine.Split(':');
 
                                 string[] slot = playerInfo[1].Split('|');
-                                string[] steamId = playerInfo[2].Split('|');
-                                string playerName = playerInfo[3];
+                                string[] steamId = playerInfo[4].Split('|');
+                                string playerName = playerInfo[5];
 
-                                AddPlayerToGrid(slot[0], playerName, steamId[0], "Connected", "");
+                                AddPlayerToGrid(slot[0], playerName.Split('|')[0], steamId[0], "Connected", "");
                             }
+                            PlayerCount.Text = playerCount.ToString();
                         }
 
                         // Process disconnected player list
@@ -415,9 +442,9 @@ namespace Squad.Admin.Console.Forms
                                 string[] playerInfo = currentLine.Split(':');
 
                                 string[] slot = playerInfo[1].Split('|');
-                                string[] steamId = playerInfo[2].Split('|');
-                                string[] time = playerInfo[3].Split('|');
-                                string playerName = playerInfo[4];
+                                string[] steamId = playerInfo[4].Split('|');
+                                string[] time = playerInfo[5].Split('|');
+                                string playerName = playerInfo[6];
 
                                 AddPlayerToGrid(slot[0], playerName, steamId[0], "Disconnected", time[0]);
                             }
@@ -426,17 +453,21 @@ namespace Squad.Admin.Console.Forms
                 }
 
             }
-            catch(Exception ex)
-            { }
+            catch (Exception ex)
+            {
 
-
+            }
+            finally
+            {
+                //TipsMsg.Text = "";
+            }
         }
 
-        #endregion
+            #endregion
 
-        #region Invoke Callbacks
+            #region Invoke Callbacks
 
-        private void AddPlayerToGrid(string serverSlot, string playerName, string steamId, string connectStatus, string disconnectTime)
+            private void AddPlayerToGrid(string serverSlot, string playerName, string steamId, string connectStatus, string disconnectTime)
         {
             if (grdPlayers.InvokeRequired)
             {

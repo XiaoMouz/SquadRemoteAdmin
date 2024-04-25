@@ -48,9 +48,9 @@
             // btnApply
             // 
             this.btnApply.Enabled = false;
-            this.btnApply.Location = new System.Drawing.Point(514, 439);
+            this.btnApply.Location = new System.Drawing.Point(514, 405);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(109, 36);
+            this.btnApply.Size = new System.Drawing.Size(109, 33);
             this.btnApply.TabIndex = 10;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
@@ -58,9 +58,9 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(629, 439);
+            this.btnCancel.Location = new System.Drawing.Point(629, 405);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(109, 36);
+            this.btnCancel.Size = new System.Drawing.Size(109, 33);
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -70,83 +70,80 @@
             // 
             this.grpWKBReasons.Controls.Add(this.dataGridView1);
             this.grpWKBReasons.Controls.Add(this.cboMessageTypes);
-            this.grpWKBReasons.Location = new System.Drawing.Point(13, 102);
+            this.grpWKBReasons.Location = new System.Drawing.Point(13, 94);
             this.grpWKBReasons.Name = "grpWKBReasons";
-            this.grpWKBReasons.Size = new System.Drawing.Size(725, 331);
+            this.grpWKBReasons.Size = new System.Drawing.Size(725, 306);
             this.grpWKBReasons.TabIndex = 12;
             this.grpWKBReasons.TabStop = false;
-            this.grpWKBReasons.Text = "Manage Warn/Kick/Ban Reasons";
+            this.grpWKBReasons.Text = "警告消息 或 踢出/封禁 理由";
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 48);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 44);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(713, 277);
+            this.dataGridView1.Size = new System.Drawing.Size(713, 256);
             this.dataGridView1.TabIndex = 1;
             // 
             // cboMessageTypes
             // 
             this.cboMessageTypes.FormattingEnabled = true;
-            this.cboMessageTypes.Location = new System.Drawing.Point(534, 20);
+            this.cboMessageTypes.Location = new System.Drawing.Point(534, 18);
             this.cboMessageTypes.Name = "cboMessageTypes";
-            this.cboMessageTypes.Size = new System.Drawing.Size(185, 21);
+            this.cboMessageTypes.Size = new System.Drawing.Size(185, 20);
             this.cboMessageTypes.TabIndex = 0;
+            this.cboMessageTypes.Text = "请选择分区";
             // 
             // lblInstructions
             // 
             this.lblInstructions.AutoSize = true;
-            this.lblInstructions.Location = new System.Drawing.Point(13, 9);
+            this.lblInstructions.Location = new System.Drawing.Point(13, 8);
             this.lblInstructions.Name = "lblInstructions";
-            this.lblInstructions.Size = new System.Drawing.Size(448, 13);
+            this.lblInstructions.Size = new System.Drawing.Size(239, 12);
             this.lblInstructions.TabIndex = 13;
-            this.lblInstructions.Text = "Use this window to manage the list of Warn/Kick/Ban messages available on the Pla" +
-    "yers List.";
+            this.lblInstructions.Text = "在这里编写你的警告消息 或 踢出/封禁理由";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 29);
+            this.label1.Location = new System.Drawing.Point(13, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(426, 13);
+            this.label1.Size = new System.Drawing.Size(185, 12);
             this.label1.TabIndex = 14;
-            this.label1.Text = "Use the following keywords in the message to insert special information into the " +
-    "message:";
+            this.label1.Text = "在消息中这些关键字会被自动替换";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(38, 47);
+            this.label2.Location = new System.Drawing.Point(38, 43);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(412, 13);
+            this.label2.Size = new System.Drawing.Size(287, 12);
             this.label2.TabIndex = 15;
-            this.label2.Text = "PLAYERNAME - This will be replaced with the selected player\'s name in the message" +
-    ".";
+            this.label2.Text = "PLAYERNAME - 此字符串会被替换为被操作的玩家名称";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(41, 64);
+            this.label3.Location = new System.Drawing.Point(41, 59);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(476, 13);
+            this.label3.Size = new System.Drawing.Size(377, 12);
             this.label3.TabIndex = 16;
-            this.label3.Text = "ADMINNAME - This will be replaced with the name used in the \'Admin Name\' field in" +
-    " the sign-in box.";
+            this.label3.Text = "ADMINNAME - 这段会被替换为管理员名称，管理员名称请在连接时设置";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(120, 83);
+            this.label4.Location = new System.Drawing.Point(120, 77);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(351, 13);
+            this.label4.Size = new System.Drawing.Size(419, 12);
             this.label4.TabIndex = 17;
-            this.label4.Text = "If you do not provide a name, the program will use \'RCON Admin\' instead.";
+            this.label4.Text = "如果你未提供名称就连接到服务端，\"ADMINNAME\" 将会被替换成 \"RCON Admin\"";
             // 
             // frmSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(750, 487);
+            this.ClientSize = new System.Drawing.Size(750, 450);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -158,7 +155,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Squad RCON - Settings";
+            this.Text = "服务器 RCON 管理 - 操作设置";
             this.grpWKBReasons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
